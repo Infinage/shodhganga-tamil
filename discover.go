@@ -154,7 +154,6 @@ func discoverTheses(fpath string) (urls []string, err error) {
 	// Cache the results
 	f, err := os.Create(fpath + ".tmp")
 	if err != nil {
-		f.Close()
 		os.Remove(fpath + ".tmp")
 		return nil, fmt.Errorf("create: %w", err)
 	}

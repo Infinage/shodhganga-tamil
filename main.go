@@ -2,45 +2,23 @@ package main
 
 import (
 	"log"
-	"net/http/cookiejar"
-	"net/url"
 )
 
 func main() {
-	/*
-		urls, err := discoverTheses("urls.txt")
-		if err != nil {
-			log.Fatalf("failed to scrape theses urls: %v", err)
-		}
-
-		metas, err := exploreTheses(urls)
-	*/
-
-	u, err := newURL("/bitstream/10603/402368/2/02_declaration.pdf")
+	urls, err := discoverTheses("urls.txt")
 	if err != nil {
-		log.Fatal(err)
+		log.Fatalf("Failed to scrape thesis urls: %v", err)
 	}
 
-	jar, err := cookiejar.New(nil)
+	metas, err := exploreTheses(urls)
 	if err != nil {
-		log.Fatal(err)
+		log.Fatalf("Failed to scrape meta: %v", err)
 	}
 
-	absUrlStr, err := url.JoinPath("https://shodhganga.inflibnet.ac.in/", u.String())
+	count, err := downloadPDFs(metas)
 	if err != nil {
-		log.Fatal(err)
+		log.Fatalf("Failed to download PDFs: %v", err)
 	}
 
-	absUrl, err := newURL(absUrlStr)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	if err = bypassAnubis(absUrl, jar); err != nil {
-		log.Fatal(err)
-	}
-
-	if err = downloadPDF(u, jar); err != nil {
-		log.Fatal(err)
-	}
+	log.Printf("Consolidated %d PDFs to disk", count)
 }
