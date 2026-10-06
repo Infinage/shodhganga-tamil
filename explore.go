@@ -206,13 +206,6 @@ func exploreTheses(urls []string) (metas []meta, err error) {
 	urlChan := make(chan string, 1)
 	metaChan := make(chan meta, 1)
 
-	// Read all processed metas and append to result
-	go func() {
-		for m := range metaChan {
-			metas = append(metas, m)
-		}
-	}()
-
 	// Spawn workers to explore each url
 	for workerID := range 20 {
 		wg.Go(func() {
@@ -229,17 +222,24 @@ func exploreTheses(urls []string) (metas []meta, err error) {
 		})
 	}
 
-	// Feed the workers
-	for _, u := range urls {
-		urlChan <- u
+	// Feed the workers and close channel to signal queue is done
+	go func() {
+		for _, u := range urls {
+			urlChan <- u
+		}
+		close(urlChan)
+	}()
+
+	// Wait for workers to finish first before closing their output channel
+	go func() {
+		wg.Wait()
+		close(metaChan)
+	}()
+
+	// Read all processed metas and append to result
+	for m := range metaChan {
+		metas = append(metas, m)
 	}
-
-	// Close to signal the end of worker queue and wait for finish
-	close(urlChan)
-	wg.Wait()
-
-	// Close the metaChan listener, all workers are done by now
-	close(metaChan)
 
 	// Enforce count matches after scraping
 	if len(metas) != len(urls) {

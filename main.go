@@ -15,10 +15,16 @@ func main() {
 		log.Fatalf("Failed to scrape meta: %v", err)
 	}
 
-	count, err := downloadPDFs(metas)
+	downloadCount, err := downloadPDFs(metas)
 	if err != nil {
 		log.Fatalf("Failed to download PDFs: %v", err)
 	}
 
-	log.Printf("Consolidated %d PDFs to disk", count)
+	log.Printf("Downloaded %d PDFs to disk", downloadCount)
+
+	if err = consolidateMetas(metas); err != nil {
+		log.Fatalf("Failed to merge PDFs: %v", err)
+	}
+
+	log.Printf("Consolidated %d PDFs to disk", len(metas))
 }

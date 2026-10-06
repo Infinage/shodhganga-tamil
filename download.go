@@ -156,7 +156,12 @@ func downloadPDF(u _url, jar *cookiejar.Jar) error {
 	}
 
 	grp, item := splits[2], splits[3]
-	noStr, fname := fmt.Sprintf("%02s", splits[4]), splits[5]
+	noStr := fmt.Sprintf("%02s", splits[4])
+	fname, err := url.PathUnescape(splits[5])
+	if err != nil {
+		return fmt.Errorf("filepath unescape: %w", err)
+	}
+
 	if !strings.HasPrefix(fname, noStr) || !strings.HasSuffix(fname, ".pdf") {
 		return fmt.Errorf("expected filename: '<no>_<filename>.pdf'")
 	}
@@ -238,7 +243,8 @@ func downloadPDFs(ms []meta) (int, error) {
 				err := downloadPDF(u, jar)
 				switch {
 				case errors.Is(err, errPDFAlreadyExists):
-					log.Printf("[Worker %d] PDF already downloaded: %q", workerID, u)
+					log.Printf("[Worker %d] PDF already downloaded: %q", workerID, u.String())
+					downloadCounter.Add(1)
 
 				case errors.Is(err, errAnubisAuthRequired):
 					err = refreshAnubis(u, jar)
@@ -255,14 +261,15 @@ func downloadPDFs(ms []meta) (int, error) {
 					}
 
 					downloadCounter.Add(1)
-					log.Printf("[Worker %d]: Download successful: %q", workerID, u)
+					log.Printf("[Worker %d]: Download successful: %q", workerID, u.String())
 
 				case err != nil:
-					log.Printf("[Worker %d] Failed to download PDF %q: %v", workerID, u, err)
+					log.Printf("[Worker %d] Failed to download PDF %q: %v",
+						workerID, u.String(), err)
 
 				default:
 					downloadCounter.Add(1)
-					log.Printf("[Worker %d]: Download successful: %q", workerID, u)
+					log.Printf("[Worker %d]: Download successful: %q", workerID, u.String())
 				}
 			}
 		})
