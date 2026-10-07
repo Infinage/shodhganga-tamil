@@ -15,7 +15,8 @@ func main() {
 		log.Fatalf("Failed to scrape meta: %v", err)
 	}
 
-	downloadCount, err := downloadPDFs(metas)
+	var ignoreErrors = true
+	downloadCount, err := downloadPDFs(metas, ignoreErrors)
 	if err != nil {
 		log.Fatalf("Failed to download PDFs: %v", err)
 	}

@@ -11,6 +11,7 @@ import (
 	"net/url"
 	"os"
 	"path/filepath"
+	"regexp"
 	"strings"
 	"sync"
 	"sync/atomic"
@@ -25,6 +26,8 @@ var (
 
 	anubisMutex       sync.Mutex
 	lastAnubisRefresh time.Time
+
+	digitPrefix = regexp.MustCompile(`^\d+`)
 )
 
 // isAnubisChallenge checks if the returned response is an anubis POW challenge.
@@ -148,22 +151,24 @@ func refreshAnubis(u _url, jar *cookiejar.Jar) error {
 // If file already exists, it returns `errPDFAlreadyExists`.
 //
 // Sample: '/bitstream/<group>/<item>/<no>/<no>_<filename>.pdf'
-func downloadPDF(u _url, jar *cookiejar.Jar) error {
+func downloadPDF(u _url, client *http.Client, workerID int) error {
 	urlStr := u.String()
 	splits := strings.Split(urlStr, "/")
 	if len(splits) != 6 {
-		return fmt.Errorf("expected format '/bitstream/<group>/<item>/<no>/<no>_<filename>.pdf'")
+		return fmt.Errorf("expected format '/bitstream/<group>/<item>/<fileNo>/<filename>.pdf'")
 	}
 
 	grp, item := splits[2], splits[3]
-	noStr := fmt.Sprintf("%02s", splits[4])
 	fname, err := url.PathUnescape(splits[5])
 	if err != nil {
 		return fmt.Errorf("filepath unescape: %w", err)
 	}
 
-	if !strings.HasPrefix(fname, noStr) || !strings.HasSuffix(fname, ".pdf") {
-		return fmt.Errorf("expected filename: '<no>_<filename>.pdf'")
+	// Some links / uploads are messed up and dont have '.pdf' attached.
+	// Yet others don't have numbered prefix at all.
+	// Eg: https://shodhganga.inflibnet.ac.in/handle/10603/210418
+	if !digitPrefix.MatchString(fname) {
+		log.Printf("[Worker %d] WARN: Filename missing digit prefix: %q", workerID, fname)
 	}
 
 	// If already downloaded, skip downloading
@@ -177,7 +182,7 @@ func downloadPDF(u _url, jar *cookiejar.Jar) error {
 		return fmt.Errorf("url join: %w", err)
 	}
 
-	log.Printf("Downloading: %q -> %q", upath, fpath)
+	log.Printf("[Worker %d] Downloading: %q -> %q", workerID, upath, fpath)
 	req, err := http.NewRequest(http.MethodGet, upath, nil)
 	if err != nil {
 		return fmt.Errorf("new request: %w", err)
@@ -185,8 +190,6 @@ func downloadPDF(u _url, jar *cookiejar.Jar) error {
 
 	// Without referer set it redirects to an analytics URL and download fails
 	req.Header.Set("Referer", upath)
-
-	client := http.Client{Jar: jar}
 	resp, err := client.Do(req)
 	if err != nil {
 		return fmt.Errorf("fetch fail: %w", err)
@@ -227,7 +230,9 @@ func downloadPDF(u _url, jar *cookiejar.Jar) error {
 // downloadPDFs downloads all PDFs across the metas supplied and returns a count of
 // downloaded PDFs. It returns an error in case of count mismatch. It auto handles
 // anubis auth challenges.
-func downloadPDFs(ms []meta) (int, error) {
+//
+// If ignoreErrors is set, it skips the final downloaded count check against input metas.
+func downloadPDFs(ms []meta, ignoreErrors bool) (int, error) {
 	jar, err := cookiejar.New(nil)
 	if err != nil {
 		return 0, fmt.Errorf("cookiejar init: %w", err)
@@ -237,10 +242,12 @@ func downloadPDFs(ms []meta) (int, error) {
 	var wg sync.WaitGroup
 	var urlCh = make(chan _url, 1)
 
-	for workerID := range 20 {
+	for workerID := range 10 {
 		wg.Go(func() {
+			client := http.Client{Jar: jar}
+
 			for u := range urlCh {
-				err := downloadPDF(u, jar)
+				err := downloadPDF(u, &client, workerID)
 				switch {
 				case errors.Is(err, errPDFAlreadyExists):
 					log.Printf("[Worker %d] PDF already downloaded: %q", workerID, u.String())
@@ -250,11 +257,11 @@ func downloadPDFs(ms []meta) (int, error) {
 					err = refreshAnubis(u, jar)
 					if err != nil {
 						log.Printf("[Worker %d] Fatal: Anubis refresh fail: %v", workerID, err)
-						return
+						continue
 					}
 					log.Printf("[Worker %d] Anubis auth successful", workerID)
 
-					if err = downloadPDF(u, jar); err != nil {
+					if err = downloadPDF(u, &client, workerID); err != nil {
 						log.Printf("[Worker %d] Failed to download PDF %q after anubis auth",
 							workerID, u, err)
 						continue
@@ -290,7 +297,11 @@ func downloadPDFs(ms []meta) (int, error) {
 	// Check total downloaded PDFs against input
 	downloadCount := downloadCounter.Load()
 	if downloadCount != int32(urlCount) {
-		return 0, fmt.Errorf("url count: want %d, got %d", urlCount, downloadCount)
+		errMsg := fmt.Sprintf("WARN: url count: want %d, got %d", urlCount, downloadCount)
+		log.Println(errMsg)
+		if !ignoreErrors {
+			return 0, fmt.Errorf(errMsg)
+		}
 	}
 
 	return int(downloadCount), nil

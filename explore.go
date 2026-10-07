@@ -207,7 +207,7 @@ func exploreTheses(urls []string) (metas []meta, err error) {
 	metaChan := make(chan meta, 1)
 
 	// Spawn workers to explore each url
-	for workerID := range 20 {
+	for workerID := range 5 {
 		wg.Go(func() {
 			for u := range urlChan {
 				m, err := exploreThesis(u)
