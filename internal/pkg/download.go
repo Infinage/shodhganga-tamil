@@ -1,4 +1,4 @@
-package main
+package shodhganga
 
 import (
 	"errors"
@@ -227,12 +227,12 @@ func downloadPDF(u _url, client *http.Client, workerID int) error {
 	return nil
 }
 
-// downloadPDFs downloads all PDFs across the metas supplied and returns a count of
+// DownloadPDFs downloads all PDFs across the metas supplied and returns a count of
 // downloaded PDFs. It returns an error in case of count mismatch. It auto handles
 // anubis auth challenges.
 //
 // If ignoreErrors is set, it skips the final downloaded count check against input metas.
-func downloadPDFs(ms []meta, ignoreErrors bool) (int, error) {
+func DownloadPDFs(ms []Meta, ignoreErrors bool) (int, error) {
 	jar, err := cookiejar.New(nil)
 	if err != nil {
 		return 0, fmt.Errorf("cookiejar init: %w", err)

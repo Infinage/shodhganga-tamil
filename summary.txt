@@ -1,0 +1,157 @@
+Missing required files:
+
+1. http://hdl.handle.net/10603/349141: "10603/349141/5. &#2990;&#3009;&#2985;&#3021;&#2985;&#3009;&#2992;&#3016;.pdf"
+2. http://hdl.handle.net/10603/640784: "10603/640784/9 annexure [1-8].pdf"
+3. http://hdl.handle.net/10603/209521: "10603/209521/7 introduction].pdf"
+4. http://hdl.handle.net/10603/630902: "10603/630902/09 annexure [1-12].pdf"
+5. http://hdl.handle.net/10603/244117: "10603/244117/7 chap[ter-1.pdf"
+6. http://hdl.handle.net/10603/283670: "10603/283670/11_references].pdf"
+7. http://hdl.handle.net/10603/458205: "10603/458205/&#2950;&#2991;&#3021;&#2997;&#3009;&#2965;&#3021;&#2965;&#2975;&#3021;&#2975;&#3009;&#2992;&#3016;&#2965;&#2995;&#3021;.pdf"
+8. http://hdl.handle.net/10603/77842: "10603/77842/12}_chapter5.pdf"
+9. http://hdl.handle.net/10603/214948: "10603/214948/11 bib].pdf"
+10. http://hdl.handle.net/10603/460875: "10603/460875/5.cha 1`.pdf"
+11. http://hdl.handle.net/10603/410887: "10603/410887/07 &#2990;&#3009;&#2985;&#3021;&#2985;&#3009;&#2992;&#3016;.pdf"
+12. http://hdl.handle.net/10603/282983: "10603/282983/13_biblography].pdf"
+13. http://hdl.handle.net/10603/436635: "10603/436635/7. &#2990;&#3009;&#2985;&#3021;&#2985;&#3009;&#2992;&#3016;.pdf"
+14. http://hdl.handle.net/10603/31210: "10603/31210/&#2949;&#2975;&#3007;&#2965;&#3021;&#2965;&#3009;&#2993;&#3007;&#2986;&#3021;&#2986;&#3009;&#2965;&#2995;&#3021;.pdf"
+15. http://hdl.handle.net/10603/564591: "10603/564591/5. &#2951;&#2991;&#2994;&#3021;-1.pdf"
+16. http://hdl.handle.net/10603/600537: "10603/600537/&#2986;&#3007;&#2985;&#3021;&#2985;&#3007;&#2979;&#3016;&#2986;&#3021;&#2986;&#3009; - 2.pdf"
+17. http://hdl.handle.net/10603/32047: "10603/32047/&#2950;&#2991;&#3021;&#2997;&#3006;&#2995;&#2992;&#3021; &#2953;&#2993;&#3009;&#2980;&#3007;&#2990;&#3018;&#2996;&#3007;.pdf"
+18. http://hdl.handle.net/10603/46477: "10603/46477/&#2950;&#2991;&#3021;&#2997;&#3006;&#2995;&#2992;&#3021; &#2953;&#2993;&#3009;&#2980;&#3007;&#2990;&#3018;&#2996;&#3007;.pdf"
+
+-----
+
+Corrupted PDFs:
+
+1. http://hdl.handle.net/10603/255243: source 08_chapter2.pdf: read and validate: read context: xref table: no header version available | qpdf err: exit status 2 | qpdf output: WARNING: 10603/255243/08_chapter2.pdf: can't find PDF header
+
+2. http://hdl.handle.net/10603/398825: source 80_recommendation.pdf: read and validate: read context: xref table: no header version available | qpdf err: exit status 2 | qpdf output: WARNING: 10603/398825/80_recommendation.pdf: can't find PDF header
+
+3. http://hdl.handle.net/10603/259929: source 09_bibliography.pdf: read and validate: read context: the file could not be opened because it is empty | qpdf err: exit status 2 | qpdf output: WARNING: 10603/259929/09_bibliography.pdf: can't find PDF header
+
+4. http://hdl.handle.net/10603/398826: source 80_recommendation.pdf: read and validate: read context: xref table: no header version available | qpdf err: exit status 2 | qpdf output: WARNING: 10603/398826/80_recommendation.pdf: can't find PDF header
+
+5. http://hdl.handle.net/10603/253897: source 13_bibliography.pdf: read and validate: read context: the file could not be opened because it is empty | qpdf err: exit status 2 | qpdf output: WARNING: 10603/253897/13_bibliography.pdf: can't find PDF header
+
+6. http://hdl.handle.net/10603/336952: source 09_chapter 2.pdf: read and validate: read context: root version: missing root dict | qpdf err: exit status 2 | qpdf output: WARNING: 10603/336952/09_chapter 2.pdf: file is damaged
+
+7. http://hdl.handle.net/10603/604630: source 05_chapter1.pdf: read and validate: read context: root version: missing root dict | qpdf err: exit status 2 | qpdf output: WARNING: 10603/604630/05_chapter1.pdf: file is damaged
+
+8. http://hdl.handle.net/10603/398827: source 80_recommendation.pdf: read and validate: read context: xref table: no header version available | qpdf err: exit status 2 | qpdf output: WARNING: 10603/398827/80_recommendation.pdf: can't find PDF header
+
+9. http://hdl.handle.net/10603/707640: destination 01_title.pdf: read and validate: read context: the file could not be opened because it is empty | qpdf err: exit status 2 | qpdf output: WARNING: 10603/707640/01_title.pdf: can't find PDF header
+
+10. http://hdl.handle.net/10603/713155: destination 01_title.pdf: read and validate: read context: xref table: no header version available | qpdf err: exit status 2 | qpdf output: WARNING: 10603/713155/01_title.pdf: can't find PDF header
+
+11. http://hdl.handle.net/10603/707645: source 08_chapter 4.pdf: read and validate: read context: xref table: no header version available | qpdf err: exit status 2 | qpdf output: WARNING: 10603/707645/08_chapter 4.pdf: can't find PDF header
+
+12. http://hdl.handle.net/10603/654674: source 06_chapter 2.pdf: read and validate: read context: root version: missing root dict | qpdf err: exit status 2 | qpdf output: WARNING: 10603/654674/06_chapter 2.pdf: file is damaged
+
+13. http://hdl.handle.net/10603/241934: source 9 chapter3.pdf: read and validate: read context: the file could not be opened because it is empty | qpdf err: exit status 2 | qpdf output: WARNING: 10603/241934/9 chapter3.pdf: can't find PDF header
+
+14. http://hdl.handle.net/10603/344241: source 11_chapter 5.pdf: read and validate: read context: xref table: xref table: unexpected eof: stream obj#3075: load encoded content: read stream content: EOF | qpdf err: exit status 2 | qpdf output: WARNING: 10603/344241/11_chapter 5.pdf: file is damaged
+
+15. http://hdl.handle.net/10603/337007: source 12_bibliography.pdf: read and validate: read context: xref table: xref table: unexpected eof: stream obj#2907: load encoded content: read stream content: EOF | qpdf err: exit status 2 | qpdf output: WARNING: 10603/337007/12_bibliography.pdf: file is damaged
+
+16. http://hdl.handle.net/10603/281927: source 08 chapter 5.pdf: read and validate: read context: xref table: xref table: unexpected eof: stream obj#460: load encoded content: read stream content: EOF | qpdf err: exit status 2 | qpdf output: WARNING: 10603/281927/08 chapter 5.pdf: file is damaged
+
+17. http://hdl.handle.net/10603/583903: source 07_chapter 3.pdf: read and validate: read context: the file could not be opened because it is empty | qpdf err: exit status 2 | qpdf output: WARNING: 10603/583903/07_chapter 3.pdf: can't find PDF header
+
+18. http://hdl.handle.net/10603/249895: source 13_appendix 1.pdf: read and validate: read context: xref table: xref table: unexpected eof: stream obj#17: load encoded content: read stream content: EOF | qpdf err: exit status 2 | qpdf output: WARNING: 10603/249895/13_appendix 1.pdf: file is damaged
+
+-----
+
+Upload order not matching filename:
+
+/bitstream/10603/215718/1/10%20chapter4.pdf
+/bitstream/10603/215718/2/11%20chapter5.pdf
+/bitstream/10603/215718/3/12%20bibliography.pdf
+/bitstream/10603/215718/4/1%20title.pdf
+/bitstream/10603/215718/5/2%20certificate.pdf
+/bitstream/10603/215718/6/3%20declaration.pdf
+/bitstream/10603/215718/7/4%20acknowledgement.pdf
+/bitstream/10603/215718/8/5%20abbreviation.pdf
+/bitstream/10603/215718/9/6%20content.pdf
+/bitstream/10603/215718/10/7%20chapter1.pdf
+/bitstream/10603/215718/11/8%20chapter2.pdf
+/bitstream/10603/215718/12/9%20chapter3.pdf
+
+Mixed filenames:
+
+/bitstream/10603/366021/1/01%20title.pdf
+/bitstream/10603/366021/2/02%20cert.pdf
+/bitstream/10603/366021/3/03%20decl.pdf
+/bitstream/10603/366021/4/04%20acknwl.pdf
+/bitstream/10603/366021/5/05%20keywords.pdf
+/bitstream/10603/366021/6/06%20content.pdf
+/bitstream/10603/366021/7/80_recommendation.pdf
+/bitstream/10603/366021/8/chapter%20%20iii.pdf
+/bitstream/10603/366021/9/chapter%20%20ii.pdf
+/bitstream/10603/366021/10/chapter%20%20i.pdf
+/bitstream/10603/366021/11/chapter%20%20iv.pdf
+/bitstream/10603/366021/12/chapter%20%20v.pdf
+/bitstream/10603/366021/13/conclusion.pdf
+
+Shortened filenames:
+
+/bitstream/10603/214940/1/10%20ch4.pdf
+/bitstream/10603/214940/2/11%20ch5.pdf
+/bitstream/10603/214940/3/12%20bib.pdf
+/bitstream/10603/214940/4/1%20tit.pdf
+/bitstream/10603/214940/5/2%20cer.pdf
+/bitstream/10603/214940/6/3%20dec.pdf
+/bitstream/10603/214940/7/4%20ack.pdf
+/bitstream/10603/214940/8/5%20abb.pdf
+/bitstream/10603/214940/9/6%20con.pdf
+/bitstream/10603/214940/10/7%20ch1.pdf
+/bitstream/10603/214940/11/8%20ch2.pdf
+/bitstream/10603/214940/12/9%20ch3.pdf
+
+Very little count of files:
+
+/bitstream/10603/600537/1/%26%232986%3b%26%233007%3b%26%232985%3b%26%233021%3b%26%232985%3b%26%233007%3b%26%232979%3b%26%233016%3b%26%232986%3b%26%233021%3b%26%232986%3b%26%233009%3b%20-%202.pdf
+/bitstream/10603/600537/2/80_recommendation.pdf
+/bitstream/10603/600537/3/abstract.pdf
+/bitstream/10603/600537/4/annexure.pdf
+
+Tamil file names:
+
+/bitstream/10603/46477/1/%26%232950%3b%26%232991%3b%26%233021%3b%26%232997%3b%26%233006%3b%26%232995%3b%26%232992%3b%26%233021%3b%20%26%232953%3b%26%232993%3b%26%233009%3b%26%232980%3b%26%233007%3b%26%232990%3b%26%233018%3b%26%232996%3b%26%233007%3b.pdf
+/bitstream/10603/46477/2/%26%232951%3b%26%232979%3b%26%233016%3b%20%26%232984%3b%26%233014%3b%26%232993%3b%26%233007%3b%26%232991%3b%26%233006%3b%26%232995%3b%26%232992%3b%26%233021%3b%20%26%232970%3b%26%233006%3b%26%232985%3b%26%233021%3b%26%232993%3b%26%233007%3b%26%232980%3b%26%232996%3b%26%233021%3b.pdf
+/bitstream/10603/46477/3/%26%232951%3b%26%232991%3b%26%232994%3b%26%233021%3b%201.pdf
+/bitstream/10603/46477/4/%26%232951%3b%26%232991%3b%26%232994%3b%26%233021%3b%202.pdf
+/bitstream/10603/46477/5/%26%232953%3b%26%232995%3b%26%233021%3b%26%232995%3b%26%233009%3b%26%232993%3b%26%233016%3b.pdf
+/bitstream/10603/46477/6/%26%232970%3b%26%233009%3b%26%232992%3b%26%233009%3b%26%232965%3b%26%233021%3b%26%232965%3b%26%232965%3b%26%233021%3b%20%26%232965%3b%26%233009%3b%26%232993%3b%26%233007%3b%26%232991%3b%26%233008%3b%26%232975%3b%26%233021%3b%26%232975%3b%26%233009%3b%20%26%232997%3b%26%233007%3b%26%232995%3b%26%232965%3b%26%233021%3b%26%232965%3b%26%232990%3b%26%233021%3b.pdf
+/bitstream/10603/46477/7/%26%232980%3b%26%232994%3b%26%233016%3b%26%232986%3b%26%233021%3b%26%232986%3b%26%233009%3b.pdf
+/bitstream/10603/46477/8/%26%232984%3b%26%233014%3b%26%232993%3b%26%233007%3b%26%232991%3b%26%233006%3b%26%232995%3b%26%232992%3b%26%233021%3b%20%26%232970%3b%26%233006%3b%26%232985%3b%26%233021%3b%26%232993%3b%26%233007%3b%26%232980%3b%26%232996%3b%26%233021%3b.pdf
+
+Non PDF Links:
+
+/bitstream/10603/210418/1/10.chapter-5.chapter-5
+/bitstream/10603/210418/3/1.title.title
+/bitstream/10603/210418/4/2.certificate.certificate
+/bitstream/10603/210418/5/3.declaration.declaration
+/bitstream/10603/210418/8/6.chapter-1.chapter-1
+/bitstream/10603/210418/9/7.chapter-2.chapter-2
+/bitstream/10603/210418/10/9.chapter-4.chapter-4
+/bitstream/10603/244151/8/paramathilor%20vadara%20nadupura%20padalkal%20katum%20samuthayam.exe
+/bitstream/10603/644105/1/01_title
+/bitstream/10603/644105/5/05_chapter%201
+/bitstream/10603/644105/6/06_chapter%202
+/bitstream/10603/644105/7/07_chapter%203
+/bitstream/10603/644105/8/08_chapter%204
+/bitstream/10603/644961/1/01_title
+/bitstream/10603/644961/2/02_prelim%20pages
+/bitstream/10603/644961/3/03_contents
+/bitstream/10603/644961/4/04_abstract
+/bitstream/10603/644961/5/05_chapter%201
+/bitstream/10603/644961/6/06_chapter%202
+/bitstream/10603/644961/7/07_chapter%203
+/bitstream/10603/644961/8/08_chapter%204
+/bitstream/10603/644961/9/09_chapter%205
+/bitstream/10603/645025/1/01_title
+/bitstream/10603/645025/2/02_prelim%20pages
+/bitstream/10603/645025/3/03_contents
+/bitstream/10603/645025/5/05_chapter%201
+/bitstream/10603/645025/6/08_chapter%204
+/bitstream/10603/645025/7/10_annexures%20files

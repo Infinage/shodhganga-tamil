@@ -1,4 +1,4 @@
-package main
+package shodhganga
 
 import (
 	"errors"
@@ -85,14 +85,14 @@ func discoverThesesFromPage(u string) (urls []string, err error) {
 	return urls, err
 }
 
-// discoverTheses checks fpath for cached urls and loads it. Does a check on
+// DiscoverTheses checks fpath for cached urls and loads it. Does a check on
 // shodhganga to check for count of tamil theses, if counts mismatch, does a
 // fresh pull of all the search results.
 //
 // Note: We may make this more efficient by sorting on the upload date and just
 // retrieving the delta. This should do for now considering I only get 54 pages
 // as of Oct 2026.
-func discoverTheses(fpath string) (urls []string, err error) {
+func DiscoverTheses(fpath string) (urls []string, err error) {
 	// Try loading the cache
 	if raw, err := os.ReadFile(fpath); err == nil {
 		content := strings.TrimSpace(string(raw))

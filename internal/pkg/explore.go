@@ -1,4 +1,4 @@
-package main
+package shodhganga
 
 import (
 	"encoding/json"
@@ -32,8 +32,8 @@ func newURLFromLinkTag(s *goquery.Selection) (_url, error) {
 }
 
 // scrapeMeta parses the html goquery document and returns a meta struct.
-func scrapeMeta(doc *goquery.Document) (meta, error) {
-	var m meta
+func scrapeMeta(doc *goquery.Document) (Meta, error) {
+	var m Meta
 	var scrapeErr error
 
 	// Fetch all the meta except for the 'Files' field
@@ -126,54 +126,54 @@ func scrapeMeta(doc *goquery.Document) (meta, error) {
 
 // exploreThesis scrapes a single thesis url and extracts the metadata including
 // the files that it contains.
-func exploreThesis(id string) (m meta, err error) {
+func exploreThesis(id string) (m Meta, err error) {
 	if !strings.HasPrefix(id, "/handle/") {
-		return meta{}, fmt.Errorf("expected format: '/handle/XXX/YYYY', got: %q", id)
+		return Meta{}, fmt.Errorf("expected format: '/handle/XXX/YYYY', got: %q", id)
 	}
 
 	// Create dir if it doesn't exist. eg: '10603/77844'
 	dirPath := filepath.Join(".", strings.TrimPrefix(id, "/handle/"))
 	if err := os.MkdirAll(dirPath, 0755); err != nil {
-		return meta{}, fmt.Errorf("mkdir: %w", err)
+		return Meta{}, fmt.Errorf("mkdir: %w", err)
 	}
 
 	// Load from cache if already exists
 	metaPath := filepath.Join(dirPath, "meta.json")
 	if raw, err := os.ReadFile(metaPath); err == nil {
 		if err = json.Unmarshal(raw, &m); err != nil {
-			return meta{}, fmt.Errorf("unmarshal meta: %w", err)
+			return Meta{}, fmt.Errorf("unmarshal meta: %w", err)
 		}
 		return m, nil
 	}
 
 	u, err := url.JoinPath("https://shodhganga.inflibnet.ac.in/", id)
 	if err != nil {
-		return meta{}, fmt.Errorf("url join: %w", err)
+		return Meta{}, fmt.Errorf("url join: %w", err)
 	}
 
 	resp, err := http.Get(u)
 	if err != nil {
-		return meta{}, fmt.Errorf("fetch: %w", err)
+		return Meta{}, fmt.Errorf("fetch: %w", err)
 	}
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
-		return meta{}, fmt.Errorf("fetch: unexpected status %s", resp.Status)
+		return Meta{}, fmt.Errorf("fetch: unexpected status %s", resp.Status)
 	}
 
 	doc, err := goquery.NewDocumentFromReader(resp.Body)
 	if err != nil {
-		return meta{}, fmt.Errorf("goquery: %w", err)
+		return Meta{}, fmt.Errorf("goquery: %w", err)
 	}
 
 	if m, err = scrapeMeta(doc); err != nil {
-		return meta{}, fmt.Errorf("scrapeMeta: %w", err)
+		return Meta{}, fmt.Errorf("scrapeMeta: %w", err)
 	}
 
 	// Cache the meta info
 	f, err := os.Create(metaPath + ".tmp")
 	if err != nil {
-		return meta{}, fmt.Errorf("create meta: %w", err)
+		return Meta{}, fmt.Errorf("create meta: %w", err)
 	}
 
 	// Write the meta as a json file
@@ -182,29 +182,29 @@ func exploreThesis(id string) (m meta, err error) {
 	if err = enc.Encode(m); err != nil {
 		f.Close()
 		os.Remove(metaPath + ".tmp")
-		return meta{}, fmt.Errorf("json encode: %w", err)
+		return Meta{}, fmt.Errorf("json encode: %w", err)
 	}
 
 	if err = f.Close(); err != nil {
 		os.Remove(metaPath + ".tmp")
-		return meta{}, fmt.Errorf("close meta: %w", err)
+		return Meta{}, fmt.Errorf("close meta: %w", err)
 	}
 
 	err = os.Rename(metaPath+".tmp", metaPath)
 	if err != nil {
 		os.Remove(metaPath + ".tmp")
-		return meta{}, fmt.Errorf("file rename: %w", err)
+		return Meta{}, fmt.Errorf("file rename: %w", err)
 	}
 
 	return m, nil
 }
 
-// exploreTheses looks into each url passed and extracts the meta data into
+// ExploreTheses looks into each url passed and extracts the meta data into
 // '<group>/<path>/meta.json'. It returns a list of all the scraped meta.
-func exploreTheses(urls []string) (metas []meta, err error) {
+func ExploreTheses(urls []string) (metas []Meta, err error) {
 	var wg sync.WaitGroup
 	urlChan := make(chan string, 1)
-	metaChan := make(chan meta, 1)
+	metaChan := make(chan Meta, 1)
 
 	// Spawn workers to explore each url
 	for workerID := range 5 {

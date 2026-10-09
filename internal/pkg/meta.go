@@ -1,4 +1,4 @@
-package main
+package shodhganga
 
 import (
 	"encoding/json"
@@ -40,7 +40,7 @@ func (u _url) MarshalJSON() ([]byte, error) {
 }
 
 // Captures all available data from 'handle/<group>/<item>'.
-type meta struct {
+type Meta struct {
 	Title       string   `json:"title"`
 	Researcher  string   `json:"researcher"`
 	Guides      _url     `json:"guides"`

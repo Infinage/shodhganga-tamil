@@ -1,4 +1,4 @@
-module shodh-tamil
+module shodhganga-tamil
 
 go 1.27.1
 
