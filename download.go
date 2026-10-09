@@ -244,7 +244,7 @@ func downloadPDFs(ms []meta, ignoreErrors bool) (int, error) {
 
 	for workerID := range 10 {
 		wg.Go(func() {
-			client := http.Client{Jar: jar}
+			client := http.Client{Jar: jar, Timeout: time.Minute * 5}
 
 			for u := range urlCh {
 				err := downloadPDF(u, &client, workerID)

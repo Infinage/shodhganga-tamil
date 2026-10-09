@@ -109,7 +109,7 @@ func discoverTheses(fpath string) (urls []string, err error) {
 	}
 
 	// We already have all the urls parsed
-	if last == len(urls) {
+	if len(urls) >= last {
 		log.Println("URL count matches with cache, skipping discovery")
 		return urls, nil
 	}
