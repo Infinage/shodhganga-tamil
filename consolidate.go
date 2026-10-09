@@ -7,6 +7,7 @@ import (
 	"log"
 	"net/url"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"regexp"
 	"slices"
@@ -124,7 +125,7 @@ func consolidateMeta(m meta) error {
 		if len(matches) != 4 {
 			return fmt.Errorf("filename format: %q", u.String())
 		} else if matches[1] != group || matches[2] != item {
-			return fmt.Errorf("want: group: %d, item: %d; got: group: %d, item: %d",
+			return fmt.Errorf("want: group: %s, item: %s; got: group: %s, item: %s",
 				group, item, matches[1], matches[2])
 		}
 
@@ -158,7 +159,7 @@ func consolidateMeta(m meta) error {
 			return fmt.Errorf("file stat: %w", err)
 		}
 
-		if !strings.HasSuffix(fpath, ".pdf") {
+		if !strings.EqualFold(filepath.Ext(fpath), ".pdf") {
 			err := api.ValidateFile(timeoutCtx, fpath, nil, nil)
 			if err != nil {
 				log.Printf("Non PDF entry %q skipped: %v", fpath, err)
@@ -174,7 +175,26 @@ func consolidateMeta(m meta) error {
 
 	err := api.MergeCreateFile(timeoutCtx, inFiles, opath, false, nil)
 	if err != nil {
-		return fmt.Errorf("pdf merge: %w", err)
+		qpdfPath, qpdfErr := exec.LookPath("qpdf")
+		if qpdfErr != nil {
+			return fmt.Errorf("pdf merge: %w; qpdf unavailable: %w", err, qpdfErr)
+		}
+
+		qpdfArgs := []string{"--empty", "--pages"}
+		qpdfArgs = append(qpdfArgs, inFiles...)
+		qpdfArgs = append(qpdfArgs, "--", opath)
+		cmd := exec.CommandContext(timeoutCtx, qpdfPath, qpdfArgs...)	
+		op, qpdfErr := cmd.CombinedOutput()
+
+		// qpdf sometimes returns warnings as exit code 3 which is okay
+		exitErr, ok := errors.AsType[*exec.ExitError](qpdfErr)
+		if qpdfErr != nil && (!ok || exitErr.ExitCode() != 3) {
+			_ = os.Remove(opath)
+			return fmt.Errorf("pdf merge: pdfcpu err: %w | qpdf err: %w | qpdf output: %s", 
+				err, qpdfErr, op)
+		}
+
+		return nil
 	}
 
 	return nil
